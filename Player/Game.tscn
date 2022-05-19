@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Player/snake_tileset.tres" type="TileSet" id=1]
+[ext_resource path="res://Player/Snake.gd" type="Script" id=2]
+[ext_resource path="res://Apple/apple_tileset.tres" type="TileSet" id=3]
+[ext_resource path="res://Apple/Apple.gd" type="Script" id=4]
+
+[node name="Game" type="Node2D"]
+
+[node name="Snake" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 32, 32 )
+format = 1
+script = ExtResource( 2 )
+
+[node name="SnakeTick" type="Timer" parent="Snake"]
+wait_time = 0.2
+autostart = true
+
+[node name="Apple" type="TileMap" parent="."]
+tile_set = ExtResource( 3 )
+cell_size = Vector2( 32, 32 )
+format = 1
+script = ExtResource( 4 )
+
+[connection signal="check_apple_eaten" from="Snake" to="Apple" method="_on_Snake_check_apple_eaten"]
+[connection signal="timeout" from="Snake/SnakeTick" to="Snake" method="_on_Timer_timeout"]
+[connection signal="eaten" from="Apple" to="Snake" method="_on_Apple_eaten"]
